@@ -36,10 +36,10 @@ unzip -o ${PACKAGE_DIRNAME}.zip
 # Install gojira to system
 cp ${PWD}/gojira /usr/local/bin/
 
-# Gojira localtion
-# - curretdir/gojira
-# - /usr/local/bin/gojira
-# You can access gojira 
-# ./gojira or gojira(system-wide)
+# Setup fields
+jql="project=TIMA AND issue in (${jira_tickets})"
 
-echo "${content}" | bash
+# Execute jira tasks
+./gojira transition --jql "${jql}" --action 751 --comment "${jira_comment}" # Passback
+./gojira transition --jql "${jql}" --action 721 # Start Test
+./gojira assignee --jql "${jql}" --user "${jira_assignee}"
